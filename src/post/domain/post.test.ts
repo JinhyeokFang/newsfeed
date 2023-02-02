@@ -4,20 +4,12 @@ import { UserId } from './user-id';
 
 describe('Post', () => {
   let post: Post;
+
   beforeEach(() => {
-    post = Post.create('any title', 'any content');
-  });
-
-  it('Post.create()', () => {
-    // given
-    const title = 'Hi this is the title';
-    const content = 'Hi this is the content';
-
-    // when
-    const post = Post.create(title, content);
-
-    // then
-    expect(post).toStrictEqual(new Post(title, content));
+    post = new Post.builder(new UserId('any user'))
+      .setTitle('any title')
+      .setContent('any content')
+      .build();
   });
 
   describe('Post.like(userId)', () => {

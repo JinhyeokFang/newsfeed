@@ -4,16 +4,14 @@ import { UserId } from './user-id';
 export class Post {
   public title: string;
   public content: string;
+  public author: UserId;
   public likes: UserId[] = [];
   public comments: Comment[] = [];
 
-  constructor(title: string, content: string) {
+  constructor(title?: string, content?: string, author?: UserId) {
     this.title = title;
     this.content = content;
-  }
-
-  static create(title: string, content: string) {
-    return new Post(title, content);
+    this.author = author;
   }
 
   like(userId: UserId) {
@@ -36,4 +34,29 @@ export class Post {
   addComment(userId: UserId, content: string) {
     this.comments.push(new Comment(userId, content));
   }
+
+  static builder = class {
+    private title = '';
+    private content = '';
+
+    constructor(private readonly userId: UserId) {}
+
+    setTitle(title: string) {
+      this.title = title;
+      return this;
+    }
+
+    setContent(content: string) {
+      this.content = content;
+      return this;
+    }
+
+    build() {
+      const post = new Post();
+      post.title = this.title;
+      post.content = this.content;
+      post.author = this.userId;
+      return post;
+    }
+  };
 }
