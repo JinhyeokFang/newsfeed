@@ -1,7 +1,13 @@
+import { Comment } from './comment';
 import { Post } from './post';
 import { UserId } from './user-id';
 
 describe('Post', () => {
+  let post: Post;
+  beforeEach(() => {
+    post = Post.create('any title', 'any content');
+  });
+
   it('Post.create()', () => {
     // given
     const title = 'Hi this is the title';
@@ -18,7 +24,6 @@ describe('Post', () => {
     it('when 좋아요 안 누른 사람 should 좋아요 추가', () => {
       // given
       const userId: UserId = new UserId('User');
-      const post = Post.create('any title', 'any content');
 
       // when
       post.like(userId);
@@ -30,7 +35,6 @@ describe('Post', () => {
     it('when 좋아요 누른 사람 should 오류', () => {
       // given
       const userId: UserId = new UserId('User');
-      const post = Post.create('any title', 'any content');
       post.like(userId);
 
       // when
@@ -46,7 +50,6 @@ describe('Post', () => {
     it('when 좋아요 누른 사람 should 좋아요 추가', () => {
       // given
       const userId: UserId = new UserId('User');
-      const post = Post.create('any title', 'any content');
       post.like(userId);
 
       // when
@@ -59,7 +62,6 @@ describe('Post', () => {
     it('when 좋아요 안 누른 사람 should 오류', () => {
       // given
       const userId: UserId = new UserId('User');
-      const post = Post.create('any title', 'any content');
 
       // when
       const when = () => {
@@ -68,5 +70,17 @@ describe('Post', () => {
 
       expect(when).toThrowError();
     });
+  });
+
+  it('Post.addComment(userId, content)', () => {
+    // given
+    const userId: UserId = new UserId('User');
+    const content = 'any comment';
+
+    // when
+    post.addComment(userId, content);
+
+    // then
+    expect(post.comments).toContainEqual(new Comment(userId, content));
   });
 });

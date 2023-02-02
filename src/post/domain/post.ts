@@ -1,10 +1,11 @@
+import { Comment } from './comment';
 import { UserId } from './user-id';
 
 export class Post {
   public title: string;
   public content: string;
   public likes: UserId[] = [];
-  public comments: unknown[] = [];
+  public comments: Comment[] = [];
 
   constructor(title: string, content: string) {
     this.title = title;
@@ -30,5 +31,9 @@ export class Post {
 
   private doesUserLikeThis(userId: UserId) {
     return this.likes.includes(userId);
+  }
+
+  addComment(userId: UserId, content: string) {
+    this.comments.push(new Comment(userId, content));
   }
 }
