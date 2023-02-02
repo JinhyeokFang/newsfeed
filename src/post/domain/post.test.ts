@@ -10,9 +10,6 @@ describe('Post', () => {
     const post = Post.create(title, content);
 
     // then
-    expect(post.comments).toStrictEqual([]);
-    expect(post.likes).toStrictEqual([]);
-    expect(post.title).toBe(title);
-    expect(post.content).toBe(content);
+    expect(post).toStrictEqual(new Post(title, content));
   });
 });
