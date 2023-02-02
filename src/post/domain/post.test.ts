@@ -21,7 +21,7 @@ describe('Post', () => {
       post.like(userId);
 
       // then
-      expect(post.likes).toContain(userId);
+      expect(post.doesUserLikeThis(userId)).toBe(true);
     });
 
     it('when 좋아요 누른 사람 should 오류', () => {
@@ -39,7 +39,7 @@ describe('Post', () => {
   });
 
   describe('Post.unlike(userId)', () => {
-    it('when 좋아요 누른 사람 should 좋아요 추가', () => {
+    it('when 좋아요 누른 사람 should 좋아요 삭제', () => {
       // given
       const userId: UserId = new UserId('User');
       post.like(userId);
@@ -48,7 +48,7 @@ describe('Post', () => {
       post.unlike(userId);
 
       // then
-      expect(post.likes).not.toContain(userId);
+      expect(post.doesUserLikeThis(userId)).toBe(false);
     });
 
     it('when 좋아요 안 누른 사람 should 오류', () => {
@@ -73,6 +73,6 @@ describe('Post', () => {
     post.addComment(userId, content);
 
     // then
-    expect(post.comments).toContainEqual(new Comment(userId, content));
+    expect(post.commentList).toContainEqual(new Comment(userId, content));
   });
 });

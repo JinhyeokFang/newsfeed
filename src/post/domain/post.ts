@@ -2,17 +2,12 @@ import { Comment } from './comment';
 import { UserId } from './user-id';
 
 export class Post {
-  public title: string;
-  public content: string;
-  public author: UserId;
-  public likes: UserId[] = [];
-  public comments: Comment[] = [];
+  private title: string;
+  private content: string;
+  private likes: UserId[] = [];
+  private comments: Comment[] = [];
 
-  constructor(title?: string, content?: string, author?: UserId) {
-    this.title = title;
-    this.content = content;
-    this.author = author;
-  }
+  constructor(public readonly author: UserId) {}
 
   like(userId: UserId) {
     if (this.doesUserLikeThis(userId))
@@ -27,12 +22,16 @@ export class Post {
     this.likes.splice(this.likes.findIndex(userId.equal, userId));
   }
 
-  private doesUserLikeThis(userId: UserId) {
+  doesUserLikeThis(userId: UserId) {
     return this.likes.includes(userId);
   }
 
   addComment(userId: UserId, content: string) {
     this.comments.push(new Comment(userId, content));
+  }
+
+  get commentList() {
+    return this.comments;
   }
 
   static builder = class {
@@ -52,10 +51,9 @@ export class Post {
     }
 
     build() {
-      const post = new Post();
+      const post = new Post(this.userId);
       post.title = this.title;
       post.content = this.content;
-      post.author = this.userId;
       return post;
     }
   };
