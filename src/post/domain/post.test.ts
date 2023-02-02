@@ -41,4 +41,32 @@ describe('Post', () => {
       expect(when).toThrowError();
     });
   });
+
+  describe('Post.unlike(userId)', () => {
+    it('when 좋아요 누른 사람 should 좋아요 추가', () => {
+      // given
+      const userId: UserId = new UserId('User');
+      const post = Post.create('any title', 'any content');
+      post.like(userId);
+
+      // when
+      post.unlike(userId);
+
+      // then
+      expect(post.likes).not.toContain(userId);
+    });
+
+    it('when 좋아요 안 누른 사람 should 오류', () => {
+      // given
+      const userId: UserId = new UserId('User');
+      const post = Post.create('any title', 'any content');
+
+      // when
+      const when = () => {
+        post.unlike(userId);
+      };
+
+      expect(when).toThrowError();
+    });
+  });
 });
