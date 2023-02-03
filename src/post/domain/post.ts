@@ -2,36 +2,48 @@ import { Comment } from './comment';
 import { UserId } from './user-id';
 
 export class Post {
-  private title: string;
-  private content: string;
-  private likes: UserId[] = [];
-  private comments: Comment[] = [];
+  private _title: string;
+  private _content: string;
+  private _likes: UserId[] = [];
+  private _comments: Comment[] = [];
 
   constructor(public readonly author: UserId) {}
 
   like(userId: UserId) {
     if (this.doesUserLikeThis(userId))
       throw new Error('이미 좋아요를 누른 사용자입니다.');
-    this.likes.push(userId);
+    this._likes.push(userId);
   }
 
   unlike(userId: UserId) {
     if (!this.doesUserLikeThis(userId))
       throw new Error('좋아요를 누른 사용자가 아닙니다.');
     // userId.equal에 userId를 this로 bind
-    this.likes.splice(this.likes.findIndex(userId.equal, userId));
+    this._likes.splice(this._likes.findIndex(userId.equal, userId));
   }
 
   doesUserLikeThis(userId: UserId) {
-    return this.likes.includes(userId);
+    return this._likes.includes(userId);
   }
 
   addComment(userId: UserId, content: string) {
-    this.comments.push(new Comment(userId, content));
+    this._comments.push(new Comment(userId, content));
   }
 
-  get commentList() {
-    return this.comments;
+  get comments(): readonly Comment[] {
+    return this._comments;
+  }
+
+  get likes(): readonly UserId[] {
+    return this._likes;
+  }
+
+  get title(): string {
+    return this._title;
+  }
+
+  get content(): string {
+    return this._content;
   }
 
   static builder = class {
@@ -52,8 +64,8 @@ export class Post {
 
     build() {
       const post = new Post(this.userId);
-      post.title = this.title;
-      post.content = this.content;
+      post._title = this.title;
+      post._content = this.content;
       return post;
     }
   };

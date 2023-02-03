@@ -73,6 +73,6 @@ describe('Post', () => {
     post.addComment(userId, content);
 
     // then
-    expect(post.commentList).toContainEqual(new Comment(userId, content));
+    expect(post.comments).toContainEqual(new Comment(userId, content));
   });
 });
