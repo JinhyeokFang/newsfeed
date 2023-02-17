@@ -21,5 +21,22 @@ describe('AccountInmemoryRepository', () => {
         null,
       );
     });
+    it('when account already saved', async () => {
+      // given
+      const account = await Account.create('id', 'password');
+      const fixedAccount = await Account.create('id', 'differentPassword');
+      accountRepository.save(account);
+
+      // when
+      accountRepository.save(fixedAccount);
+
+      // then
+      const accountFromRepository = await accountRepository.findOneByEmail(
+        account.email,
+      );
+      expect(
+        await accountFromRepository.comparePassword('differentPassword'),
+      ).toBe(true);
+    });
   });
 });
