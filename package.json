@@ -30,11 +30,13 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
     "precommit": "yarn run format && yarn run lint && yarn test",
     "commit": "cz",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "node ./build/src/bootstrap.js"
   },
   "jest": {
     "moduleFileExtensions": [
