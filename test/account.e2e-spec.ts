@@ -24,4 +24,25 @@ describe('AccountController (e2e)', () => {
         password: '!!',
       });
   });
+
+  it('/login', async () => {
+    await request(app).post('/account/register').send({
+      email: '!',
+      password: '!!',
+    });
+    await request(app)
+      .post('/account/login')
+      .send({
+        email: '!',
+        password: '!!!',
+      })
+      .expect(404);
+    return request(app)
+      .post('/account/login')
+      .send({
+        email: '!',
+        password: '!!',
+      })
+      .expect(200);
+  });
 });

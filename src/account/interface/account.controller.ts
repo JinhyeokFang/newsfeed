@@ -14,11 +14,24 @@ export class AccountController {
   public async register(req, res) {
     const { email, password } = req.body;
 
-    await this.accountService.register('email', 'password');
+    await this.accountService.register(email, password);
 
     res.send({
       email,
       password,
     });
+  }
+
+  @Post('/login')
+  public async login(req, res) {
+    const { email, password } = req.body;
+
+    const isLoggedIn = await this.accountService.login(email, password);
+
+    if (isLoggedIn) {
+      res.send('OK');
+    } else {
+      res.status(404).send('NO');
+    }
   }
 }
