@@ -4,7 +4,6 @@ import { Post } from '../../common/route-function';
 import { AccountService } from '../business/account.service';
 
 @Controller('/account')
-@injectable()
 export class AccountController {
   constructor(
     @inject('AccountService')
