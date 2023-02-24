@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
+import { Controller } from '../../common/controller';
 import { Post } from '../../common/route-function';
 import { AccountService } from '../business/account.service';
 
+@Controller('/account')
 @injectable()
 export class AccountController {
-  public basePath = '/account';
-
   constructor(
     @inject('AccountService')
     private readonly accountService: AccountService,

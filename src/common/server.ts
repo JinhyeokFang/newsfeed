@@ -12,6 +12,11 @@ export class Server {
     const controllerInstance = Container.get(controller.name) as {
       basePath?: string;
     };
+
+    if (controllerInstance.basePath === undefined) {
+      throw new Error(`${controller.name} is not a Controller`);
+    }
+
     Object.getOwnPropertyNames(prototype)
       .filter((property) => Array.isArray(controllerInstance[property]))
       .forEach((property) => {
@@ -20,7 +25,7 @@ export class Server {
         const handler = controllerInstance[property][2];
         router[method](path, handler.bind(controllerInstance));
       });
-    this.baseRouter.use(controllerInstance.basePath || '*', router);
+    this.baseRouter.use(controllerInstance.basePath, router);
   }
 
   injectController(controllers: any[]) {
