@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { AccountController } from '../src/account/interface/account.controller';
 import * as request from 'supertest';
 import { Server } from '../src/common/server';
@@ -11,7 +12,14 @@ describe('AccountController (e2e)', () => {
     app = server.app;
   });
 
-  it('AccountController.register', () => {
-    return request(app).get('/').expect(200).expect('Hello World!');
+  it('/register', () => {
+    return request(app)
+      .post('/account/register')
+      .send({
+        email: '',
+        password: '',
+      })
+      .expect(200)
+      .expect('Hello World!');
   });
 });

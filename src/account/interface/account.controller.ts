@@ -1,11 +1,20 @@
-import { Controller } from '../../common/controller';
-import { Get } from '../../common/route-function';
+import { inject, injectable } from 'inversify';
+import { Post } from '../../common/route-function';
+import { AccountService } from '../business/account.service';
 
-export class AccountController extends Controller {
-  public basePath = '*';
+@injectable()
+export class AccountController {
+  public basePath = '/account';
 
-  @Get('/')
-  public async registerNewAccount(req, res) {
+  constructor(
+    @inject('AccountService')
+    private readonly accountService: AccountService,
+  ) {}
+
+  @Post('/register')
+  public async register(req, res) {
+    await this.accountService.register('email', 'password');
+
     res.send('Hello World!');
   }
 }

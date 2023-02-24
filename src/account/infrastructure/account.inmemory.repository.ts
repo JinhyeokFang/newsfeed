@@ -1,6 +1,8 @@
+import { injectable } from 'inversify';
 import { Account } from '../domain/account';
 import { AccountRepository } from '../domain/account.repository';
 
+@injectable()
 export class AccountInmemoryRepository implements AccountRepository {
   private static accounts: Account[] = [];
 

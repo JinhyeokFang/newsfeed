@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { AccountInmemoryRepository } from '../infrastructure/account.inmemory.repository';
 import { AccountService } from './account.service';
 

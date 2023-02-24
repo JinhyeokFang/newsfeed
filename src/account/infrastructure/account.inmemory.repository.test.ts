@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Account } from '../domain/account';
 import { AccountInmemoryRepository } from './account.inmemory.repository';
 

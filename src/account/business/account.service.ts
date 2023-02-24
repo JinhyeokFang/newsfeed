@@ -1,8 +1,13 @@
+import { inject, injectable } from 'inversify';
 import { Account } from '../domain/account';
 import { AccountRepository } from '../domain/account.repository';
 
+@injectable()
 export class AccountService {
-  constructor(private readonly accountRepository: AccountRepository) {}
+  constructor(
+    @inject('AccountRepository')
+    private readonly accountRepository: AccountRepository,
+  ) {}
 
   async register(email: string, password: string) {
     const account = await Account.create(email, password);

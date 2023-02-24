@@ -1,26 +1,29 @@
 import { Router } from 'express';
-import { Controller } from './controller';
 import * as express from 'express';
+import { Container } from './container';
 
 export class Server {
   private expressApp = express();
   private baseRouter: Router;
 
-  private addControllerToRouter(controller: typeof Controller) {
+  private addControllerToRouter(controller: any) {
     const router = Router();
     const prototype = controller.prototype;
+    const controllerInstance = Container.get(controller.name) as {
+      basePath?: string;
+    };
     Object.getOwnPropertyNames(prototype)
-      .filter((property) => Array.isArray(new controller()[property]))
+      .filter((property) => Array.isArray(controllerInstance[property]))
       .forEach((property) => {
-        const method = new controller()[property][0];
-        const path = new controller()[property][1];
-        const handler = new controller()[property][2];
-        router[method](path, handler);
+        const method = controllerInstance[property][0];
+        const path = controllerInstance[property][1];
+        const handler = controllerInstance[property][2];
+        router[method](path, handler.bind(controllerInstance));
       });
-    this.baseRouter.use(new controller().basePath, router);
+    this.baseRouter.use(controllerInstance.basePath || '*', router);
   }
 
-  injectController(controllers: (typeof Controller)[]) {
+  injectController(controllers: any[]) {
     this.baseRouter = Router();
     controllers.forEach(this.addControllerToRouter, this);
     this.expressApp.use(this.baseRouter);
