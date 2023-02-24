@@ -16,10 +16,12 @@ describe('AccountController (e2e)', () => {
     return request(app)
       .post('/account/register')
       .send({
-        email: '',
-        password: '',
+        email: '!',
+        password: '!!',
       })
-      .expect(200)
-      .expect('Hello World!');
+      .expect({
+        email: '!',
+        password: '!!',
+      });
   });
 });

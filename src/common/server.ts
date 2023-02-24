@@ -6,6 +6,11 @@ export class Server {
   private expressApp = express();
   private baseRouter: Router;
 
+  constructor() {
+    this.expressApp.use(express.urlencoded({ extended: false }));
+    this.expressApp.use(express.json());
+  }
+
   private addControllerToRouter(controller: any) {
     const router = Router();
     const prototype = controller.prototype;

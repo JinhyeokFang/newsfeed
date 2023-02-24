@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { inject } from 'inversify';
 import { Controller } from '../../common/controller';
 import { Post } from '../../common/route-function';
 import { AccountService } from '../business/account.service';
@@ -12,8 +12,13 @@ export class AccountController {
 
   @Post('/register')
   public async register(req, res) {
+    const { email, password } = req.body;
+
     await this.accountService.register('email', 'password');
 
-    res.send('Hello World!');
+    res.send({
+      email,
+      password,
+    });
   }
 }
