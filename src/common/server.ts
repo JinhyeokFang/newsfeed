@@ -6,9 +6,10 @@ export class Server {
   private expressApp = express();
   private baseRouter: Router;
 
-  constructor() {
-    this.expressApp.use(express.urlencoded({ extended: false }));
-    this.expressApp.use(express.json());
+  constructor(middlewares: ((req, res, next) => void)[]) {
+    middlewares.forEach((middleware) => {
+      this.expressApp.use(middleware);
+    }, this);
   }
 
   private addControllerToRouter(controller: any) {
@@ -27,8 +28,11 @@ export class Server {
       .forEach((property) => {
         const method = controllerInstance[property][0];
         const path = controllerInstance[property][1];
-        const handler = controllerInstance[property][2];
-        router[method](path, handler.bind(controllerInstance));
+        const handlers = controllerInstance[property][2];
+        router[method](
+          path,
+          ...handlers.map((handler) => handler.bind(controllerInstance)),
+        );
       });
     this.baseRouter.use(controllerInstance.basePath, router);
   }

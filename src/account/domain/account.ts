@@ -1,9 +1,9 @@
 import { hash, compare } from 'bcrypt';
 
 export class Account {
-  private constructor(
+  constructor(
     public readonly email: string,
-    private readonly hashedPassword: string,
+    public readonly hashedPassword: string,
   ) {}
 
   async comparePassword(plainPassword: string): Promise<boolean> {
