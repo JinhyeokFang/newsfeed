@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as express from 'express';
+import express from 'express';
 import { Container } from './container';
 
 export class Server {

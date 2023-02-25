@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { AccountController } from '../src/account/interface/account.controller';
-import * as request from 'supertest';
+import request from 'supertest';
 import { Server } from '../src/common/server';
 import { Connection } from '../src/common/database';
 import { json, urlencoded } from 'express';
