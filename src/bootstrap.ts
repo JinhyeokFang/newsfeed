@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { json, urlencoded } from 'express';
 import { AccountController } from './account/interface/account.controller';
 import { Server } from './common/server';
