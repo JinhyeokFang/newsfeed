@@ -1,8 +1,8 @@
 import { inject } from 'inversify';
 import { Controller } from '../../common/controller';
 import { Post } from '../../common/route-function';
-import { Validate } from '../../common/validate';
 import { AccountService } from '../business/account.service';
+import { LoginBody } from './login.body';
 import { RegisterBody } from './register.body';
 
 @Controller('/account')
@@ -12,8 +12,7 @@ export class AccountController {
     private readonly accountService: AccountService,
   ) {}
 
-  @Validate(RegisterBody)
-  @Post('/register')
+  @Post('/register', RegisterBody)
   public async register(req, res) {
     const { email, password } = req.body;
 
@@ -25,7 +24,7 @@ export class AccountController {
     });
   }
 
-  @Post('/login')
+  @Post('/login', LoginBody)
   public async login(req, res) {
     const { email, password } = req.body;
 
