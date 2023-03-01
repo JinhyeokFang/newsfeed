@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import configData from '../config';
 
 class _Config {
   constructor(public readonly envs: Record<string, string>) {
@@ -10,9 +11,4 @@ class _Config {
   }
 }
 
-export const Config = new _Config({
-  databaseHost: 'DATABASE_HOST',
-  databasePassword: 'DATABASE_PASSWORD',
-  databaseUsername: 'DATABASE_USER',
-  databaseName: 'DATABASE_NAME',
-});
+export const Config = new _Config(configData);
