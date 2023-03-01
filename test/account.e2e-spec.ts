@@ -18,35 +18,47 @@ describe('AccountController (e2e)', () => {
     Connection.end();
   });
 
-  it('/register', () => {
-    return request(app)
-      .post('/account/register')
-      .send({
-        email: '!',
-        password: '!!',
-      })
-      .expect({
-        email: '!',
-        password: '!!',
-      });
+  describe('/register', () => {
+    it('when 정상적으로 요청 should 성공', () => {
+      return request(app)
+        .post('/account/register')
+        .send({
+          email: 'abc@abc.com',
+          password: '!!',
+        })
+        .expect({
+          email: 'abc@abc.com',
+          password: '!!',
+        });
+    });
+
+    it('when 잘못된 이메일로 요청 should 실패', () => {
+      return request(app)
+        .post('/account/register')
+        .send({
+          email: 'not email',
+          password: '!!',
+        })
+        .expect(400);
+    });
   });
 
   it('/login', async () => {
     await request(app).post('/account/register').send({
-      email: '!',
+      email: 'abc@abc.com',
       password: '!!',
     });
     await request(app)
       .post('/account/login')
       .send({
-        email: '!',
+        email: 'abc@abc.com',
         password: '!!!',
       })
       .expect(404);
     return request(app)
       .post('/account/login')
       .send({
-        email: '!',
+        email: 'abc@abc.com',
         password: '!!',
       })
       .expect(200);

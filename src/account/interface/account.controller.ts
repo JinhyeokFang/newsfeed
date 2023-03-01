@@ -1,8 +1,9 @@
 import { inject } from 'inversify';
 import { Controller } from '../../common/controller';
-import { Intercept } from '../../common/intercept-function';
 import { Post } from '../../common/route-function';
+import { Validate } from '../../common/validate';
 import { AccountService } from '../business/account.service';
+import { RegisterBody } from './register.body';
 
 @Controller('/account')
 export class AccountController {
@@ -11,10 +12,7 @@ export class AccountController {
     private readonly accountService: AccountService,
   ) {}
 
-  @Intercept((req, res, next) => {
-    console.dir(req.body);
-    next();
-  })
+  @Validate(RegisterBody)
   @Post('/register')
   public async register(req, res) {
     const { email, password } = req.body;
