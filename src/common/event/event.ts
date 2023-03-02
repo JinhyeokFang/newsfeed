@@ -1,8 +1,9 @@
 import EventEmitter2 from 'eventemitter2';
 import { injectable } from 'inversify';
+import { EventEmitter } from './event-emitter';
 
 @injectable()
-export class Event {
+export class Event implements EventEmitter {
   private static emitter = new EventEmitter2({
     wildcard: false,
     delimiter: '.',
