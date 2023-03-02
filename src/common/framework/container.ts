@@ -1,4 +1,4 @@
-import context from '../context';
+import context from '../../context';
 import { Container as InversifyContainer } from 'inversify';
 
 class _Container {

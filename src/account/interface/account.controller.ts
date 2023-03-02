@@ -1,6 +1,6 @@
 import { inject } from 'inversify';
-import { Controller } from '../../common/controller';
-import { Post } from '../../common/route-function';
+import { Controller } from '../../common/framework/controller';
+import { Post } from '../../common/framework/route-function';
 import { AccountService } from '../business/account.service';
 import { LoginBody } from './login.body';
 import { RegisterBody } from './register.body';

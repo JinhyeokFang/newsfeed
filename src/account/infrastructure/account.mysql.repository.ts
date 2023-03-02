@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { Connection } from '../../common/database';
+import { Connection } from '../../common/database/database';
 import { Account } from '../domain/account';
 import { AccountRepository } from '../domain/account.repository';
 import AccountData from './account.data-mapper';

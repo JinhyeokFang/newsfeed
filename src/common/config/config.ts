@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import configData from '../config';
+import configData from '../../config';
 
 class _Config {
   constructor(public readonly envs: Record<string, string>) {

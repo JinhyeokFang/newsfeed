@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { AccountController } from '../src/account/interface/account.controller';
 import request from 'supertest';
-import { Server } from '../src/common/server';
-import { Connection } from '../src/common/database';
+import { Server } from '../src/common/framework/server';
+import { Connection } from '../src/common/database/database';
 import { json, urlencoded } from 'express';
 
 describe('AccountController (e2e)', () => {

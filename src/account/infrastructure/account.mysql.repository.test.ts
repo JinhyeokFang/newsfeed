@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Connection } from '../../common/database';
+import { Connection } from '../../common/database/database';
 import { Account } from '../domain/account';
 import { AccountMysqlRepository } from './account.mysql.repository';
 
