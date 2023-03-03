@@ -15,44 +15,78 @@ const validate =
     }
   };
 
-export function Get(route: string) {
-  return (_, __, descriptor: PropertyDescriptor) => {
-    descriptor.value = [HttpMethod.GET, route, [descriptor.value]];
+export function Get(path: string) {
+  return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    Reflect.defineMetadata(
+      key,
+      {
+        method: HttpMethod.GET,
+        path,
+        handlers: [descriptor.value],
+      },
+      target.constructor,
+    );
   };
 }
 
-export function Post(route: string, body?: ClassConstructor<object>) {
-  return (_, __, descriptor: PropertyDescriptor) => {
-    descriptor.value = [
-      HttpMethod.POST,
-      route,
-      body ? [validate(body), descriptor.value] : [descriptor.value],
-    ];
+export function Post(path: string, body?: ClassConstructor<object>) {
+  return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    Reflect.defineMetadata(
+      key,
+      {
+        method: HttpMethod.POST,
+        path,
+        handlers: body
+          ? [validate(body), descriptor.value]
+          : [descriptor.value],
+      },
+      target.constructor,
+    );
   };
 }
 
-export function Put(route: string, body?: ClassConstructor<object>) {
-  return (_, __, descriptor: PropertyDescriptor) => {
-    descriptor.value = [
-      HttpMethod.POST,
-      route,
-      body ? [validate(body), descriptor.value] : [descriptor.value],
-    ];
+export function Put(path: string, body?: ClassConstructor<object>) {
+  return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    Reflect.defineMetadata(
+      key,
+      {
+        method: HttpMethod.PUT,
+        path,
+        handlers: body
+          ? [validate(body), descriptor.value]
+          : [descriptor.value],
+      },
+      target.constructor,
+    );
   };
 }
 
-export function Patch(route: string, body?: ClassConstructor<object>) {
-  return (_, __, descriptor: PropertyDescriptor) => {
-    descriptor.value = [
-      HttpMethod.POST,
-      route,
-      body ? [validate(body), descriptor.value] : [descriptor.value],
-    ];
+export function Patch(path: string, body?: ClassConstructor<object>) {
+  return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    Reflect.defineMetadata(
+      key,
+      {
+        method: HttpMethod.PATCH,
+        path,
+        handlers: body
+          ? [validate(body), descriptor.value]
+          : [descriptor.value],
+      },
+      target.constructor,
+    );
   };
 }
 
-export function Delete(route: string) {
-  return (_, __, descriptor: PropertyDescriptor) => {
-    descriptor.value = [HttpMethod.DELETE, route, [descriptor.value]];
+export function Delete(path: string) {
+  return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    Reflect.defineMetadata(
+      key,
+      {
+        method: HttpMethod.DELETE,
+        path,
+        handlers: [descriptor.value],
+      },
+      target.constructor,
+    );
   };
 }

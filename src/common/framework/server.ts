@@ -24,14 +24,21 @@ export class Server {
     }
 
     Object.getOwnPropertyNames(prototype)
-      .filter((property) => Array.isArray(controllerInstance[property]))
+      .filter(
+        (property) =>
+          Reflect.getMetadata(controllerInstance[property].name, controller) !==
+          undefined,
+      )
       .forEach((property) => {
-        const method = controllerInstance[property][0];
-        const path = controllerInstance[property][1];
-        const handlers = controllerInstance[property][2];
-        router[method](
-          path,
-          ...handlers.map((handler) => handler.bind(controllerInstance)),
+        const metadata = Reflect.getMetadata(
+          controllerInstance[property].name,
+          controller,
+        );
+        router[metadata.method](
+          metadata.path,
+          ...metadata.handlers.map((handler) =>
+            handler.bind(controllerInstance),
+          ),
         );
       });
     this.baseRouter.use(controllerInstance.basePath, router);
