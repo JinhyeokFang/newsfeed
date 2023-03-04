@@ -1,16 +1,4 @@
-import { inject, injectable } from 'inversify';
-import { EventEmitter } from '../../common/event/event-emitter';
+import { injectable } from 'inversify';
 
 @injectable()
-export class PostService {
-  constructor(
-    @inject('EventEmitter')
-    private readonly eventEmitter: EventEmitter,
-  ) {
-    this.eventEmitter.on('accountRegistered', this.onAccountRegistered);
-  }
-
-  private onAccountRegistered(event: Record<string, unknown>) {
-    console.log(`${JSON.stringify(event)}, wow`);
-  }
-}
+export class PostService {}

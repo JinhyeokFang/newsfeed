@@ -5,13 +5,18 @@ import { Server } from '../src/common/framework/server';
 import { Connection } from '../src/common/database/database';
 import { json, urlencoded } from 'express';
 import { PostController } from '../src/post/interface/post.controller';
+import { UserController } from '../src/user/interface/user.controller';
 
 describe('AccountController (e2e)', () => {
   let app: Express.Application;
 
   beforeEach(() => {
     const server = new Server([json(), urlencoded({ extended: true })]);
-    server.injectController([AccountController, PostController]);
+    server.injectController([
+      AccountController,
+      PostController,
+      UserController,
+    ]);
     app = server.app;
   });
 
