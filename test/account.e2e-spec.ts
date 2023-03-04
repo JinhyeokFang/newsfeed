@@ -4,13 +4,14 @@ import request from 'supertest';
 import { Server } from '../src/common/framework/server';
 import { Connection } from '../src/common/database/database';
 import { json, urlencoded } from 'express';
+import { PostController } from '../src/post/interface/post.controller';
 
 describe('AccountController (e2e)', () => {
   let app: Express.Application;
 
   beforeEach(() => {
     const server = new Server([json(), urlencoded({ extended: true })]);
-    server.injectController([AccountController]);
+    server.injectController([AccountController, PostController]);
     app = server.app;
   });
 

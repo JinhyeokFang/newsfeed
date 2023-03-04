@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { Event } from '../../common/event/event';
 import { AccountInmemoryRepository } from '../infrastructure/account.inmemory.repository';
 import { AccountService } from './account.service';
 
@@ -7,7 +8,7 @@ describe('AccountService', () => {
 
   beforeEach(() => {
     const accountRepository = new AccountInmemoryRepository();
-    accountService = new AccountService(accountRepository);
+    accountService = new AccountService(accountRepository, new Event());
   });
 
   it('AccountService.register()', async () => {
