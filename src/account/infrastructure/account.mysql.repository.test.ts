@@ -1,17 +1,19 @@
 import 'reflect-metadata';
-import { Connection } from '../../common/database/database';
+import { DataSource } from '../../common/database/database';
 import { Account } from '../domain/account';
 import { AccountMysqlRepository } from './account.mysql.repository';
 
 describe('AccountMysqlRepository', () => {
+  let dataSource: DataSource;
   let accountRepository: AccountMysqlRepository;
 
   beforeEach(() => {
-    accountRepository = new AccountMysqlRepository();
+    dataSource = new DataSource();
+    accountRepository = new AccountMysqlRepository(dataSource);
   });
 
   afterAll(() => {
-    Connection.end();
+    dataSource.removePool();
   });
 
   describe('AccountMysqlRepository.save()', () => {

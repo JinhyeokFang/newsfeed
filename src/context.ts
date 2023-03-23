@@ -7,6 +7,7 @@ import { PostController } from './post/interface/post.controller';
 import { PostService } from './post/business/post.service';
 import { UserController } from './user/interface/user.controller';
 import { UserService } from './user/business/user.service';
+import { DataSource } from './common/database/database';
 
 export default {
   AccountController,
@@ -20,4 +21,6 @@ export default {
 
   UserController,
   UserService,
+
+  DataSource,
 };

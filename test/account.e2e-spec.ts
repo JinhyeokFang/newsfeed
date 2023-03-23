@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { AccountController } from '../src/account/interface/account.controller';
 import request from 'supertest';
 import { Server } from '../src/common/framework/server';
-import { Connection } from '../src/common/database/database';
+import { DataSource } from '../src/common/database/database';
 import { json, urlencoded } from 'express';
 import { PostController } from '../src/post/interface/post.controller';
 import { UserController } from '../src/user/interface/user.controller';
@@ -21,7 +21,7 @@ describe('AccountController (e2e)', () => {
   });
 
   afterAll(() => {
-    Connection.end();
+    new DataSource().removePool();
   });
 
   describe('/register', () => {
