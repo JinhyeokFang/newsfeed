@@ -1,7 +1,6 @@
 import { config } from 'dotenv';
-import configData from '../../config';
 
-class _Config {
+export class Config {
   constructor(public readonly envs: Record<string, string>) {
     config();
   }
@@ -10,5 +9,3 @@ class _Config {
     return process.env[this.envs[key]];
   }
 }
-
-export const Config = new _Config(configData);
