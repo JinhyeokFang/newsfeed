@@ -15,9 +15,10 @@ describe('AccountService', () => {
     // given
     const email = 'email';
     const password = 'password';
+    const name = 'name';
 
     // when
-    await accountService.register(email, password);
+    await accountService.register(email, password, name);
 
     // then
     expect(await accountService.login(email, password)).toBe(true);

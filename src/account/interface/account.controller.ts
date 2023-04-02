@@ -14,13 +14,14 @@ export class AccountController {
 
   @Post('/register', RegisterBody)
   public async register(req, res) {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
-    await this.accountService.register(email, password);
+    await this.accountService.register(email, password, name);
 
     res.send({
       email,
       password,
+      name,
     });
   }
 

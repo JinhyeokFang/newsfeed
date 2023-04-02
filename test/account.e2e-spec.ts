@@ -26,10 +26,12 @@ describe('AccountController (e2e)', () => {
         .send({
           email: 'abc@abc.com',
           password: '!!',
+          name: 'name',
         })
         .expect({
           email: 'abc@abc.com',
           password: '!!',
+          name: 'name',
         });
     });
 
@@ -39,6 +41,7 @@ describe('AccountController (e2e)', () => {
         .send({
           email: 'not email',
           password: '!!',
+          name: 'name',
         })
         .expect(400);
     });

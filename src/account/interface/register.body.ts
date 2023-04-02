@@ -6,4 +6,7 @@ export class RegisterBody {
 
   @IsString()
   password: string;
+
+  @IsString()
+  name: string;
 }

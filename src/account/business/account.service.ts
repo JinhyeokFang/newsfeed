@@ -12,8 +12,8 @@ export class AccountService {
     private readonly eventEmitter: EventEmitter,
   ) {}
 
-  async register(email: string, password: string) {
-    const account = await Account.create(email, password);
+  async register(email: string, password: string, name: string) {
+    const account = await Account.create(email, password, name);
     await this.accountRepository.save(account);
     this.eventEmitter.emit('accountRegistered', {
       email: account.email,
