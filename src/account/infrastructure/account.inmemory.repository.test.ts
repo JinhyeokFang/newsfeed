@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Account } from '../domain/account';
+import { UserId } from '../domain/user-id';
 import { AccountInmemoryRepository } from './account.inmemory.repository';
 
 describe('AccountInmemoryRepository', () => {
@@ -12,7 +13,11 @@ describe('AccountInmemoryRepository', () => {
   describe('AccountInmemoryRepository.save()', () => {
     it('when account had not been saved', async () => {
       // given
-      const account = await Account.create('id', 'password');
+      const account = await Account.create({
+        email: 'email@email.com',
+        password: 'password',
+        name: 'name',
+      });
 
       // when
       accountRepository.save(account);
@@ -24,8 +29,16 @@ describe('AccountInmemoryRepository', () => {
     });
     it('when account already saved', async () => {
       // given
-      const account = await Account.create('id', 'password');
-      const fixedAccount = await Account.create('id', 'differentPassword');
+      const account = await Account.create({
+        email: 'email@email.com',
+        password: 'password',
+        name: 'name',
+      });
+      const fixedAccount = await Account.create({
+        email: 'email@email.com',
+        password: 'differentPassword',
+        name: 'name',
+      });
       accountRepository.save(account);
 
       // when

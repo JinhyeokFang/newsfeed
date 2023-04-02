@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 export class UserId {
   constructor(private readonly stringifiedId: string) {}
 
@@ -7,5 +9,9 @@ export class UserId {
 
   equal(anotherUserId): boolean {
     return this.stringifiedId === anotherUserId.stringifiedId;
+  }
+
+  static generate() {
+    return new UserId(randomUUID());
   }
 }

@@ -13,7 +13,11 @@ export class AccountService {
   ) {}
 
   async register(email: string, password: string, name: string) {
-    const account = await Account.create(email, password, name);
+    const account = await Account.create({
+      email,
+      password,
+      name,
+    });
     await this.accountRepository.save(account);
     this.eventEmitter.emit('accountRegistered', {
       email: account.email,

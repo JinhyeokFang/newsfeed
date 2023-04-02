@@ -1,12 +1,15 @@
 import { hash, compare } from 'bcrypt';
 import { UserId } from './user-id';
 
+interface AccountData {
+  email: string;
+  hashedPassword: string;
+  name: string;
+  id: UserId;
+}
+
 export class Account {
-  constructor(
-    public readonly email: string,
-    public readonly hashedPassword: string,
-    public readonly name: string,
-  ) {}
+  private constructor(private readonly data: AccountData) {}
   private _following: UserId[] = [];
 
   follow(userIdToFollow: UserId) {
@@ -32,15 +35,36 @@ export class Account {
   }
 
   async comparePassword(plainPassword: string): Promise<boolean> {
-    return await compare(plainPassword, this.hashedPassword);
+    return await compare(plainPassword, this.data.hashedPassword);
   }
 
-  static async create(email: string, password: string, name: string) {
-    const hashedPassword = await Account.createHashedPassword(password);
-    return new Account(email, hashedPassword, name);
+  static async create(data: {
+    email: string;
+    password?: string;
+    hashedPassword?: string;
+    name: string;
+    id?: UserId;
+  }) {
+    const hashedPassword =
+      data.hashedPassword ||
+      (await Account.createHashedPassword(data.password));
+    return new Account({
+      email: data.email,
+      hashedPassword,
+      name: data.name,
+      id: data.id || UserId.generate(),
+    });
   }
 
   private static async createHashedPassword(password: string) {
     return await hash(password, 10);
+  }
+
+  get email() {
+    return this.data.email;
+  }
+
+  get hashedPassword() {
+    return this.data.hashedPassword;
   }
 }

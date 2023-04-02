@@ -19,7 +19,11 @@ describe('AccountMysqlRepository', () => {
   describe('AccountMysqlRepository.save()', () => {
     it('when account had not been saved', async () => {
       // given
-      const account = await Account.create('id', 'password');
+      const account = await Account.create({
+        email: 'email@email.com',
+        password: 'password',
+        name: 'name',
+      });
 
       // when
       await accountRepository.save(account);
@@ -31,8 +35,16 @@ describe('AccountMysqlRepository', () => {
     });
     it('when account already saved', async () => {
       // given
-      const account = await Account.create('id', 'password');
-      const fixedAccount = await Account.create('id', 'differentPassword');
+      const account = await Account.create({
+        email: 'email@email.com',
+        password: 'password',
+        name: 'name',
+      });
+      const fixedAccount = await Account.create({
+        email: 'email@email.com',
+        password: 'differentPassword',
+        name: 'name',
+      });
       accountRepository.save(account);
 
       // when

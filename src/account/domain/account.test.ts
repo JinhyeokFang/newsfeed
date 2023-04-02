@@ -5,7 +5,11 @@ describe('Account', () => {
   let account: Account;
 
   beforeEach(async () => {
-    account = await Account.create('', 'password', '');
+    account = await Account.create({
+      email: 'email@email.com',
+      password: 'password',
+      name: 'name',
+    });
   });
 
   it('Account.comparePassword(plainPassword)', async () => {

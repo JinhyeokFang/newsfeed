@@ -31,6 +31,10 @@ export class AccountMysqlRepository implements AccountRepository {
     }
 
     const accountData = accountDatas[0];
-    return new Account(accountData.email, accountData.hashedPassword);
+    return Account.create({
+      email: accountData.email,
+      hashedPassword: accountData.hashedPassword,
+      name: 'name',
+    });
   }
 }
