@@ -67,4 +67,8 @@ export class Account {
   get hashedPassword() {
     return this.data.hashedPassword;
   }
+
+  get id() {
+    return this.data.id;
+  }
 }

@@ -1,5 +1,5 @@
 export function Intercept(interceptor: (req, res, next) => void) {
-  return (target: any, key: string, _) => {
+  return (target: any, key: string) => {
     const metadata = Reflect.getMetadata(key, target.constructor);
     if (metadata === undefined) {
       return;

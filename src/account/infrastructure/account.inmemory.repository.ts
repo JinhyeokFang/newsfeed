@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { Account } from '../domain/account';
 import { AccountRepository } from '../domain/account.repository';
+import { UserId } from '../domain/user-id';
 
 @injectable()
 export class AccountInmemoryRepository implements AccountRepository {
@@ -35,6 +36,16 @@ export class AccountInmemoryRepository implements AccountRepository {
       throw new Error('account does not exist');
     }
     const index = this.getIndexOfAccount(email);
+    return AccountInmemoryRepository.accounts[index];
+  }
+
+  async findOneById(id: UserId): Promise<Account> {
+    const index = AccountInmemoryRepository.accounts.findIndex(
+      (account) => account.id === id,
+    );
+    if (index == -1) {
+      throw new Error('account does not exist');
+    }
     return AccountInmemoryRepository.accounts[index];
   }
 }

@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { EventEmitter } from '../../common/event/event-emitter';
 import { Account } from '../domain/account';
 import { AccountRepository } from '../domain/account.repository';
+import { UserId } from '../domain/user-id';
 
 @injectable()
 export class AccountService {
@@ -27,5 +28,17 @@ export class AccountService {
   async login(email: string, password: string) {
     const account = await this.accountRepository.findOneByEmail(email);
     return await account.comparePassword(password);
+  }
+
+  async follow(follower: UserId, following: UserId) {
+    const account = await this.accountRepository.findOneById(follower);
+    account.follow(following);
+    await this.accountRepository.save(account);
+  }
+
+  async unfollow(follower: UserId, following: UserId) {
+    const account = await this.accountRepository.findOneById(follower);
+    account.unfollow(following);
+    await this.accountRepository.save(account);
   }
 }

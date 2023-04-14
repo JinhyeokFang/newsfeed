@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { Account } from '../domain/account';
-import { UserId } from '../domain/user-id';
 import { AccountInmemoryRepository } from './account.inmemory.repository';
 
 describe('AccountInmemoryRepository', () => {
