@@ -48,4 +48,14 @@ export class AccountInmemoryRepository implements AccountRepository {
     }
     return AccountInmemoryRepository.accounts[index];
   }
+
+  async removeById(id: UserId): Promise<void> {
+    const index = AccountInmemoryRepository.accounts.findIndex(
+      (account) => account.id === id,
+    );
+    if (index == -1) {
+      throw new Error('account does not exist');
+    }
+    AccountInmemoryRepository.accounts.splice(index, 1);
+  }
 }

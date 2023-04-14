@@ -30,6 +30,10 @@ export class AccountService {
     return await account.comparePassword(password);
   }
 
+  async unregister(id: UserId) {
+    await this.accountRepository.removeById(id);
+  }
+
   async follow(follower: UserId, following: UserId) {
     const account = await this.accountRepository.findOneById(follower);
     account.follow(following);

@@ -55,4 +55,9 @@ export class AccountMysqlRepository implements AccountRepository {
       name: 'name',
     });
   }
+
+  async removeById(id: UserId): Promise<void> {
+    const sql = `DELETE FROM accounts WHERE id = '${id}`;
+    await this.dataSource.createPool().query(sql);
+  }
 }
