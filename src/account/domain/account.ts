@@ -19,7 +19,7 @@ export class Account {
   }
 
   private isFollow(userId: UserId) {
-    return this._following.indexOf(userId) !== -1;
+    return this._following.findIndex((user) => user.equal(userId)) !== -1;
   }
 
   unfollow(userIdToUnfollow: UserId) {

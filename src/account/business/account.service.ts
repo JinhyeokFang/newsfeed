@@ -30,6 +30,10 @@ export class AccountService {
     return await account.comparePassword(password);
   }
 
+  async getAccount(email: string) {
+    return await this.accountRepository.findOneByEmail(email);
+  }
+
   async unregister(id: UserId) {
     await this.accountRepository.removeById(id);
   }
