@@ -1,4 +1,4 @@
-import { UserId } from '../../account/domain/user-id';
+import { UserId } from '../domain/user-id';
 import { Post } from './post';
 
 export interface PostRepository {
