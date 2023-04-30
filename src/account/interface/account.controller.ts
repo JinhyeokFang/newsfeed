@@ -6,6 +6,7 @@ import { UserId } from '../domain/user-id';
 import { LoginBody } from './login.body';
 import { RegisterBody } from './register.body';
 import { FollowBody } from './follow.body';
+import { UnfollowBody } from './unfollow.body';
 
 @Controller('/account')
 export class AccountController {
@@ -47,7 +48,13 @@ export class AccountController {
   public async getAccount(req, res) {
     const { email } = req.params;
 
-    res.send(await this.accountService.getAccount(email));
+    const account = await this.accountService.getAccount(email);
+
+    res.send({
+      id: account.id.toString(),
+      email: account.email,
+      following: account.following.map((id) => id.toString()),
+    });
   }
 
   @Patch('/follow', FollowBody)
@@ -56,6 +63,21 @@ export class AccountController {
 
     try {
       await this.accountService.follow(
+        new UserId(follower),
+        new UserId(following),
+      );
+      res.send('OK');
+    } catch (err) {
+      res.status(403).send('Forbidden');
+    }
+  }
+
+  @Patch('/unfollow', UnfollowBody)
+  public async unfollow(req, res) {
+    const { follower, following } = req.body;
+
+    try {
+      await this.accountService.unfollow(
         new UserId(follower),
         new UserId(following),
       );
