@@ -1,3 +1,4 @@
+import { randomInt } from 'crypto';
 import { Comment } from './comment';
 import { UserId } from './user-id';
 
@@ -7,7 +8,7 @@ export class Post {
   private _likes: UserId[] = [];
   private _comments: Comment[] = [];
 
-  constructor(public readonly author: UserId) {}
+  constructor(public readonly id: number, public readonly author: UserId) {}
 
   like(userId: UserId) {
     if (this.doesUserLikeThis(userId))
@@ -49,8 +50,14 @@ export class Post {
   static builder = class {
     private title = '';
     private content = '';
+    private id: number = randomInt(2 ** 31 - 1);
 
     constructor(private readonly userId: UserId) {}
+
+    setId(id: number) {
+      this.id = id;
+      return this;
+    }
 
     setTitle(title: string) {
       this.title = title;
@@ -63,7 +70,7 @@ export class Post {
     }
 
     build() {
-      const post = new Post(this.userId);
+      const post = new Post(this.id, this.userId);
       post._title = this.title;
       post._content = this.content;
       return post;

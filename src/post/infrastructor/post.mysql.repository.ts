@@ -14,8 +14,9 @@ export class PostMysqlRepository implements PostRepository {
 
   async save(post: Post): Promise<void> {
     const pool = this.dataSource.createPool();
-    const createPostSql = `INSERT IGNORE INTO posts (title, authorUserId, content) VALUES (?, ?, ?)`;
+    const createPostSql = `INSERT IGNORE INTO posts (id, title, authorUserId, content) VALUES (?, ?, ?, ?)`;
     await pool.execute(createPostSql, [
+      post.id,
       post.title,
       post.author.toString(),
       post.content,
