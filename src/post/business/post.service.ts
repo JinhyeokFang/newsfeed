@@ -24,4 +24,16 @@ export class PostService {
 
     return posts;
   }
+
+  async like(postId: number, userId: UserId) {
+    const post = await this.postRepository.findOneById(postId);
+    post.like(userId);
+    await this.postRepository.save(post);
+  }
+
+  async dislike(postId: number, userId: UserId) {
+    const post = await this.postRepository.findOneById(postId);
+    post.dislike(userId);
+    await this.postRepository.save(post);
+  }
 }

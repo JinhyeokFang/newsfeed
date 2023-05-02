@@ -68,7 +68,7 @@ export class AccountController {
       );
       res.send('OK');
     } catch (err) {
-      res.status(403).send('Forbidden');
+      res.status(400).send('Bad Request');
     }
   }
 
@@ -83,7 +83,7 @@ export class AccountController {
       );
       res.send('OK');
     } catch (err) {
-      res.status(403).send('Forbidden');
+      res.status(400).send('Bad Request');
     }
   }
 }

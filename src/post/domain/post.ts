@@ -16,7 +16,7 @@ export class Post {
     this._likes.push(userId);
   }
 
-  unlike(userId: UserId) {
+  dislike(userId: UserId) {
     if (!this.doesUserLikeThis(userId))
       throw new Error('좋아요를 누른 사용자가 아닙니다.');
     // userId.equal에 userId를 this로 bind
@@ -24,7 +24,7 @@ export class Post {
   }
 
   doesUserLikeThis(userId: UserId) {
-    return this._likes.includes(userId);
+    return this._likes.findIndex(userId.equal, userId) !== -1;
   }
 
   addComment(userId: UserId, content: string) {
@@ -50,6 +50,8 @@ export class Post {
   static builder = class {
     private title = '';
     private content = '';
+    private likes: UserId[] = [];
+    private comments: Comment[] = [];
     private id: number = randomInt(2 ** 31 - 1);
 
     constructor(private readonly userId: UserId) {}
@@ -69,10 +71,22 @@ export class Post {
       return this;
     }
 
+    setLikes(likes: UserId[]) {
+      this.likes = likes;
+      return this;
+    }
+
+    setComments(comments: Comment[]) {
+      this.comments = comments;
+      return this;
+    }
+
     build() {
       const post = new Post(this.id, this.userId);
       post._title = this.title;
       post._content = this.content;
+      post._likes = this.likes;
+      post._comments = this.comments;
       return post;
     }
   };

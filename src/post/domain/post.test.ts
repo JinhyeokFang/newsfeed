@@ -38,14 +38,14 @@ describe('Post', () => {
     });
   });
 
-  describe('Post.unlike(userId)', () => {
+  describe('Post.dislike(userId)', () => {
     it('when 좋아요 누른 사람 should 좋아요 삭제', () => {
       // given
       const userId: UserId = new UserId('User');
       post.like(userId);
 
       // when
-      post.unlike(userId);
+      post.dislike(userId);
 
       // then
       expect(post.doesUserLikeThis(userId)).toBe(false);
@@ -57,7 +57,7 @@ describe('Post', () => {
 
       // when
       const when = () => {
-        post.unlike(userId);
+        post.dislike(userId);
       };
 
       expect(when).toThrowError();

@@ -133,7 +133,7 @@ describe('AccountController (e2e)', () => {
           following: following.body.id,
           follower: follower.body.id,
         })
-        .expect(403);
+        .expect(400);
     });
   });
 
@@ -171,6 +171,18 @@ describe('AccountController (e2e)', () => {
         following: following.body.id,
         follower: follower.body.id,
       });
+      await request(app).patch('/account/follow').send({
+        following: following.body.id,
+        follower: follower.body.id,
+      });
+      await request(app).patch('/account/follow').send({
+        following: following.body.id,
+        follower: follower.body.id,
+      });
+      await request(app).patch('/account/follow').send({
+        following: following.body.id,
+        follower: follower.body.id,
+      });
 
       return request(app)
         .patch('/account/unfollow')
@@ -193,7 +205,7 @@ describe('AccountController (e2e)', () => {
           following: following.body.id,
           follower: follower.body.id,
         })
-        .expect(403);
+        .expect(400);
     });
   });
 });
