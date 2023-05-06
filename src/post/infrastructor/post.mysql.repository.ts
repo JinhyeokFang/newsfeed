@@ -81,4 +81,10 @@ export class PostMysqlRepository implements PostRepository {
     });
     return;
   }
+
+  async deleteOneById(id: number): Promise<void> {
+    const pool = this.dataSource.createPool();
+    const sql = `DELETE FROM post WHERE id = ?`;
+    await pool.execute(sql, [id]);
+  }
 }
